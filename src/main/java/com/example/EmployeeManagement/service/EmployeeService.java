@@ -2,9 +2,11 @@ package com.example.EmployeeManagement.service;
 
 import com.example.EmployeeManagement.entity.Employee;
 import com.example.EmployeeManagement.implementation.EmployeeImpl;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EmployeeService implements EmployeeImpl {
 
     public List<Employee> getAllEmployees() {
