@@ -3,6 +3,7 @@ package com.example.EmployeeManagement.service;
 import com.example.EmployeeManagement.entity.User;
 import com.example.EmployeeManagement.implementation.UserImpl;
 import com.example.EmployeeManagement.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class UserService implements UserImpl {
 
     private final UserRepository userRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
