@@ -1,33 +1,52 @@
 package com.example.EmployeeManagement.controller;
 
 import com.example.EmployeeManagement.entity.Employee;
+import com.example.EmployeeManagement.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/employees")
 public class EmployeeController {
 
+    private final EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
-        return null;
+        return new ResponseEntity<>(employeeService.getAllEmployees(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Employee> getEmployee(long employeeId) {
-        return null;
+    @GetMapping(path = "/{employeeId}")
+    public ResponseEntity<Optional<Employee>> getEmployee(@PathVariable Long employeeId) {
+        Optional<Employee> employee = employeeService.getEmployee(employeeId);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    public ResponseEntity<Employee> postEmployee(Employee employee) {
-        return null;
+    @PostMapping
+    public ResponseEntity<Employee> postEmployee(@RequestBody Employee employee) {
+        Employee addedNewEmployee = employeeService.addNewEmployee(employee);
+        return new ResponseEntity<>(addedNewEmployee, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Employee> putEmployee(Long employeeId, Employee employee) throws Exception {
-        return null;
+    @PutMapping(path = "/{employeeId}")
+    public ResponseEntity<Employee> putEmployee(@PathVariable Long employeeId, @RequestBody Employee employee) throws Exception {
+        Employee updateEmployee = employeeService.updateEmployee(employeeId, employee);
+        return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
     }
 
-    public void deleteEmployee(Long employeeId) throws Exception {
+    @DeleteMapping(path = "/{employeeId}")
+    public void deleteEmployee(@PathVariable Long employeeId) throws Exception {
+        employeeService.deleteEmployee(employeeId);
 
     }
 
