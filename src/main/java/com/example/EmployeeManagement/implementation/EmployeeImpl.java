@@ -3,12 +3,13 @@ package com.example.EmployeeManagement.implementation;
 import com.example.EmployeeManagement.entity.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeImpl {
 
     List<Employee> getAllEmployees();
 
-    Employee getEmployee(long employeeId);
+    Optional<Employee> getEmployee(long employeeId);
 
     Employee addNewEmployee(Employee employee);
 
