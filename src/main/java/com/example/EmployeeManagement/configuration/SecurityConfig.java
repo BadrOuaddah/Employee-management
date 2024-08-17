@@ -1,35 +1,66 @@
 package com.example.EmployeeManagement.configuration;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.Customizer;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.stereotype.Component;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
-
-@Component
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authRequest -> {
-            authRequest.requestMatchers("/h2-console/**").permitAll();
-            authRequest.requestMatchers("/", "/employees/**").authenticated();
-            authRequest.requestMatchers("/users/**").hasAnyRole("ADMIN", "MANAGER");
-        });
-        http.cors(AbstractHttpConfigurer::disable);
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.headers(AbstractHttpConfigurer::disable);
-        http.formLogin(Customizer.withDefaults());
-        http.httpBasic(Customizer.withDefaults());
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/login", "/error", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/users/**").hasRole("ADMIN")
+                        .requestMatchers("/employees/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/employees/view/**").hasRole("EMPLOYEE")
+                        .anyRequest().authenticated()
+                )
+                .formLogin((form) -> form
+                        .defaultSuccessUrl("/employees", true)
+                        .permitAll()
+                )
+                .logout(LogoutConfigurer::permitAll);
+
         return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public UserDetailsService userDetailsService() {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(
+                User.withUsername("admin")
+                        .password(passwordEncoder().encode("admin123"))
+                        .roles("ADMIN")
+                        .build()
+        );
+        manager.createUser(
+                User.withUsername("manager")
+                        .password(passwordEncoder().encode("manager123"))
+                        .roles("MANAGER")
+                        .build()
+        );
+        manager.createUser(
+                User.withUsername("employee")
+                        .password(passwordEncoder().encode("employee123"))
+                        .roles("EMPLOYEE")
+                        .build()
+        );
+        return manager;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
