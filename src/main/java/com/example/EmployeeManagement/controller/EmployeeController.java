@@ -32,6 +32,12 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/view/{employeeId}")
+    public ResponseEntity<Optional<Employee>> viewEmployee(@PathVariable Long employeeId) {
+        Optional<Employee> employee = employeeService.getEmployee(employeeId);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Employee> postEmployee(@RequestBody Employee employee) {
         Employee addedNewEmployee = employeeService.addNewEmployee(employee);
