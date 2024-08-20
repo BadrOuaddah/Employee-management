@@ -2,6 +2,7 @@ version: '3'
 
 services:
   keycloak-db:
+    container_name: postgres_keycloak
     image: postgres:13
     environment:
       POSTGRES_DB: keycloak
@@ -9,6 +10,8 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - keycloak-db-data:/var/lib/postgresql/data
+    ports:
+      - "5438:5432"
     networks:
       - keycloak-network
 
@@ -18,6 +21,11 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       DB_VENDOR: postgres
+      KEYCLOAK_DATABASE_HOST: keycloak_db
+      KEYCLOAK_DATABASE_PORT: 5432
+      KEYCLOAK_DATABASE_NAME: postgres
+      KEYCLOAK_DATABASE_USER: postgres
+      KEYCLOAK_DATABASE_PASSWORD: root
       DB_ADDR: keycloak-db
       DB_DATABASE: keycloak
       DB_USER: keycloak
