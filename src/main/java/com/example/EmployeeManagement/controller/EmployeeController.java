@@ -53,7 +53,6 @@ public class EmployeeController {
     @DeleteMapping(path = "/{employeeId}")
     public void deleteEmployee(@PathVariable Long employeeId) throws Exception {
         employeeService.deleteEmployee(employeeId);
-
     }
 
 }

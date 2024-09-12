@@ -3,6 +3,7 @@ package com.example.EmployeeManagement.service;
 import com.example.EmployeeManagement.entity.Manager;
 import com.example.EmployeeManagement.implementation.ManagerImpl;
 import com.example.EmployeeManagement.repository.ManagerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class ManagerService implements ManagerImpl {
 
     private final ManagerRepository managerRepository;
 
+    @Autowired
     public ManagerService(ManagerRepository managerRepository) {
         this.managerRepository = managerRepository;
     }
