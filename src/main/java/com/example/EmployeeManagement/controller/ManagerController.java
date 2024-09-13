@@ -2,6 +2,7 @@ package com.example.EmployeeManagement.controller;
 
 import com.example.EmployeeManagement.entity.Manager;
 import com.example.EmployeeManagement.service.ManagerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/managers")
+@Slf4j
 public class ManagerController {
 
     private final ManagerService managerService;
