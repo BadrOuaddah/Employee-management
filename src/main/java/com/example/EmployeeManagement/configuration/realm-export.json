@@ -1,0 +1,64 @@
+{
+  "realm": "SpringBootKeycloak",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "employee-app",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientAuthenticatorType": "client-secret",
+      "secret": "myClientSecret",
+      "redirectUris": [
+        "http://localhost:8080/*"
+      ],
+      "baseUrl": "http://localhost:8080",
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role"
+      },
+      {
+        "name": "manager",
+        "description": "Manager role"
+      },
+      {
+        "name": "employee",
+        "description": "Employee role"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "user1",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456"
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "user2",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "123456789"
+        }
+      ],
+      "realmRoles": [
+        "manager"
+      ]
+    }
+  ]
+}
