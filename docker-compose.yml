@@ -32,6 +32,7 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_IMPORT: /realm-export.json
     ports:
       - "9091:8080"
     depends_on:
