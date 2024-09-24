@@ -21,26 +21,29 @@
     "realm": [
       {
         "name": "admin",
-        "description": "Administrator role"
+        "description": "Administrator with full access to manage the system"
       },
       {
         "name": "manager",
-        "description": "Manager role"
+        "description": "Manager with permissions to manage employees"
       },
       {
         "name": "employee",
-        "description": "Employee role"
+        "description": "Employee with basic access rights"
       }
     ]
   },
   "users": [
     {
-      "username": "user1",
+      "username": "adminUser",
       "enabled": true,
+      "email": "admin@example.com",
+      "emailVerified": true,
       "credentials": [
         {
           "type": "password",
-          "value": "123456"
+          "value": "password",
+          "temporary": false
         }
       ],
       "realmRoles": [
@@ -48,16 +51,35 @@
       ]
     },
     {
-      "username": "user2",
+      "username": "managerUser",
       "enabled": true,
+      "email": "manager@example.com",
+      "emailVerified": true,
       "credentials": [
         {
           "type": "password",
-          "value": "123456789"
+          "value": "password",
+          "temporary": false
         }
       ],
       "realmRoles": [
         "manager"
+      ]
+    },
+    {
+      "username": "employeeUser",
+      "enabled": true,
+      "email": "employee@example.com",
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "employee"
       ]
     }
   ]
