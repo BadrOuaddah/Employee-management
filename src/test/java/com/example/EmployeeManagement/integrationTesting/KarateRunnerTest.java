@@ -8,6 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class KarateRunnerTest {
     @Karate.Test
     Karate testAll() {
-        return Karate.run("classpath:karate/employee.feature");
+        return Karate.run("classpath:karate/employee.feature").relativeTo(getClass());
     }
 }
