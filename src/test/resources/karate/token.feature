@@ -1,11 +1,29 @@
-Feature: OAuth2 Token
+Feature: OAuth2 Token from Keycloak
 
-  Scenario: Get token from Keycloak
+  Background:
+    * url tokenUrl
+    * def clientId = clientId
+    * def password = 'password'
+    * def clientSecret = clientSecret
+    * def adminUser = users.adminUser
+    * def managerUser = users.managerUser
+    * def employeeUser = users.employeeUser
 
-    Given url tokenUrl
-    And header Content-Type = 'application/x-www-form-urlencoded'
-    And request { grant_type: 'password', client_id: 'employee-app', username: 'adminuser', password: 'password' }
+  Scenario Outline: Import token for <role> user
+    Given path ''
+    And form field grant_type = password
+    And form field client_id = clientId
+    And form field client_secret = clientSecret
+    And form field username = '<username>'
+    And form field password = '<password>'
     When method POST
     Then status 200
-    And print response
-    * def token = response.access_token
+    And match response contains { access_token: '#notnull' }
+    And def authToken = response.access_token
+    * print '*** Authorization token for <role> *** : ', authToken
+
+    Examples:
+      | role     | username     | password |
+      | admin    | adminUser    | password |
+      | manager  | managerUser  | password |
+      | employee | employeeUser | password |
