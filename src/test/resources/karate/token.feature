@@ -12,7 +12,7 @@ Feature: OAuth2 Token from Keycloak
   Scenario Outline: Import token for <role> user
     Given path ''
     And form field grant_type = password
-    And form field client_id = clientId
+    And form field client_id = clientId`
     And form field client_secret = clientSecret
     And form field username = '<username>'
     And form field password = '<password>'
