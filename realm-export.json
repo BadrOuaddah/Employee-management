@@ -14,7 +14,24 @@
       "baseUrl": "http://localhost:9091",
       "publicClient": false,
       "standardFlowEnabled": true,
-      "directAccessGrantsEnabled": true
+      "directAccessGrantsEnabled": true,
+      "protocolMappers": [
+        {
+          "name": "Client Role Mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "config": {
+            "client": "employee-app",
+            "jsonType": "String",
+            "role": "roles",
+            "multivalued": "true",
+            "tokenClaimName": "resource_access",
+            "addToIdToken": "true",
+            "addToAccessToken": "true",
+            "addToUserinfo": "true"
+          }
+        }
+      ]
     }
   ],
   "roles": {
@@ -31,7 +48,23 @@
         "name": "employee",
         "description": "Employee with basic access rights"
       }
-    ]
+    ],
+    "client": {
+      "employee-app": [
+        {
+          "name": "admin",
+          "description": "Administrator with full access to manage the system"
+        },
+        {
+          "name": "manager",
+          "description": "Manager with permissions to manage employees"
+        },
+        {
+          "name": "employee",
+          "description": "Employee with basic access rights"
+        }
+      ]
+    }
   },
   "users": [
     {
@@ -48,7 +81,12 @@
       ],
       "realmRoles": [
         "admin"
-      ]
+      ],
+      "clientRoles": {
+        "employee-app": [
+          "admin"
+        ]
+      }
     },
     {
       "username": "managerUser",
@@ -64,7 +102,12 @@
       ],
       "realmRoles": [
         "manager"
-      ]
+      ],
+      "clientRoles": {
+        "employee-app": [
+          "manager"
+        ]
+      }
     },
     {
       "username": "employeeUser",
@@ -80,7 +123,12 @@
       ],
       "realmRoles": [
         "employee"
-      ]
+      ],
+      "clientRoles": {
+        "employee-app": [
+          "employee"
+        ]
+      }
     }
   ]
 }
