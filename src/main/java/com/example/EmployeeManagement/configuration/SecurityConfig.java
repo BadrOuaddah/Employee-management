@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/swagger.json").permitAll()
                         .requestMatchers("/users/**").hasRole("admin")
-                        .requestMatchers("/managers/**").hasRole("manager")
+                        .requestMatchers("/managers/**").hasAnyRole("admin", "manager")
                         .requestMatchers("/employees/**").hasAnyRole("admin", "manager")
                         .requestMatchers("/employees/view/**").hasRole("employee")
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
