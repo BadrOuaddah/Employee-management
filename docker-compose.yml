@@ -44,8 +44,20 @@ services:
     networks:
       - keycloak-network
 
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - keycloak-network
+
 volumes:
   keycloak-db-data:
+  jenkins_home:
 
 networks:
   keycloak-network:
