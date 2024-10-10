@@ -12,7 +12,7 @@ Feature: OAuth2 Token from Keycloak
   Scenario Outline: Import token for <role> user
     Given path ''
     And form field grant_type = password
-    And form field client_id = clientId`
+    And form field client_id = clientId
     And form field client_secret = clientSecret
     And form field username = '<username>'
     And form field password = '<password>'
@@ -27,3 +27,15 @@ Feature: OAuth2 Token from Keycloak
       | admin    | adminUser    | password |
       | manager  | managerUser  | password |
       | employee | employeeUser | password |
+
+  @ignore @getToken
+  Scenario: Import token for manager user
+    Given path ''
+    And form field grant_type = password
+    And form field client_id = clientId
+    And form field client_secret = clientSecret
+    And form field username = 'managerUser'
+    And form field password = 'password'
+    When method POST
+    Then status 200
+    Then def authToken = response.access_token
