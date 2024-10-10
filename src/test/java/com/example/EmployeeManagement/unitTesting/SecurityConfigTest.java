@@ -49,6 +49,13 @@ public class SecurityConfigTest {
     }
 
     @Test
+    @WithMockUser(username = "employeeUser", roles = {"employee"})
+    public void employeeCanNotAccessTest() throws Exception {
+        mockMvc.perform(get("/managers"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     @WithMockUser(username = "unauthorizedUser", roles = {"employee"})
     public void unauthorizedAccessTest() throws Exception {
         mockMvc.perform(get("/users"))
