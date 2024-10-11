@@ -41,7 +41,8 @@ jwt:
     converter:
       resource-id: employee-app
       principal-attribute: principal_username
-
+server:
+  port: 8090
 logging:
   level:
     org.springframework.security: DEBUG
