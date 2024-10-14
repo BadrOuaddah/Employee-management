@@ -19,12 +19,6 @@ pipeline {
                 sh 'mvn test'
             }
         }
-
-        stage('Report') {
-            steps {
-                cucumber()
-            }
-        }
     }
 
     post {
