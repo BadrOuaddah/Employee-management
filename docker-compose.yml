@@ -52,18 +52,17 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - keycloak-network
 
   agent:
     container_name: jenkins_agent
-    image: jenkins/ssh-agent:jdk11
+    image: maven:3.8.7-eclipse-temurin-17
     privileged: true
     user: root
-    expose:
-      - 22
-    environment:
-      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDTNGrXllb2n5XISBsBRdrwxTSV+R0vRSNYpAZlBbpiczTYZJcYNVXbpN0q4m9ryo/y8V4mDAblxQ0h19a6roXvlr9l/PQN4mHY68ISK8AiSBy49f6PRO6zr1Y+Qnjca5n3f6ytCVhD7lcn/EDPqEt1uE8PAsK54tySXNUYNifpmvJmAFLsarNKjurkySc1B2j+vzhtBIaqs1+gEKLwETdOyIq01Baz71Esx8YktuBGe5vb7lM4PptpXovQaJzjE8RVsEPq/VsigbS7HQRc99EvUrISf0bNHITJhfTXo86Iy+IXByhD4fdujARStOzLxTOYhvfgUJVtD5zdqK9PVAmKn+zkoaJDRt+sFbfC6w3kxaeQQvb4uWVYEkiVe9fp5vk3YjePmAbhjLyiaf0GAfcWChDdajt4F/NEp8ZFJeXliWaYmYrmsvvZMqEQT12osJBEs0jvrNMZ1JoX7me056gVRUrwZC8DSa/7zMcwZStxkZ4SoiOKHDTFWJyaIZHRfqM= jenkins@0cd61423c746
+    networks:
+      - keycloak-network
 
 volumes:
   keycloak-db-data:
