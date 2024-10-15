@@ -1,20 +1,11 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.8.1'
-        jdk 'JDK 11'
-    }
-
-    environment {
-        SPRING_PROFILES_ACTIVE = 'test'
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 echo 'Cloning the repository...'
-                git branch: 'main', url: 'https://github.com/BadrOuaddah/Employee-management.git'
+                git branch: 'master', url: 'https://github.com/BadrOuaddah/Employee-management.git'
             }
         }
 
@@ -34,10 +25,6 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Cleaning up workspace...'
-            cleanWs()
-        }
         success {
             echo 'Build and Tests succeeded!'
         }
