@@ -56,14 +56,6 @@ services:
     networks:
       - keycloak-network
 
-  agent:
-    container_name: jenkins_agent
-    image: maven:3.8.7-eclipse-temurin-17
-    privileged: true
-    user: root
-    networks:
-      - keycloak-network
-
 volumes:
   keycloak-db-data:
   jenkins_home:
