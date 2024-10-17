@@ -36,7 +36,7 @@ services:
     ports:
       - "9091:8080"
     volumes:
-      - D:/Employee-management/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
     depends_on:
       - keycloak-db
     command:
