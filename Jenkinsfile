@@ -16,24 +16,37 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Test') {
+        stage('Tests') {
             steps {
                 echo 'Running tests...'
                 sh 'mvn test'
             }
         }
+
+        stage('Integration Tests and Package') {
+            steps {
+                echo 'Running integration tests and packaging the application...'
+                sh 'mvn verify'
+            }
+        }
     }
 
     post {
+        always {
+            echo 'Archiving test results and logs...'
+            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            junit 'target/surefire-reports/*.xml'
+        }
         success {
-            echo 'Build and Tests succeeded!'
+            echo 'Build, Tests, and Package succeeded!'
         }
         failure {
-            echo 'Build or Tests failed!'
+            echo 'Build or Tests failed! Check logs for details.'
+            archiveArtifacts artifacts: 'target/logs/*.log', allowEmptyArchive: true
         }
     }
 }
