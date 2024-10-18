@@ -13,6 +13,13 @@ pipeline {
             }
         }
 
+        stage('Clean') {
+            steps {
+                echo 'Cleaning the project...'
+                sh 'mvn clean install -U'
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Building the project...'
