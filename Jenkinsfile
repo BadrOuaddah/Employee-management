@@ -55,12 +55,7 @@ pipeline {
         stage('Tests') {
             steps {
                 echo 'Running tests...'
-                sh '''
-                mvn test -Dspring.datasource.url=${DB_URL} \
-                -Dspring.datasource.username=${DB_USERNAME} \
-                -Dspring.datasource.password=${DB_PASSWORD} \
-                -Dspring.security.oauth2.client.provider.keycloak.issuer-uri=http://localhost:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
-                '''
+                sh 'mvn test'
             }
         }
 
