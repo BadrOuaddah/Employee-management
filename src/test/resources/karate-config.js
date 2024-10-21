@@ -1,6 +1,6 @@
 function fun() {
     var config = {
-        baseUrl: 'http://localhost:8080',
+        baseUrl: 'http://localhost:8091',
         tokenUrl: 'http://localhost:9091/realms/SpringBootKeycloak/protocol/openid-connect/token',
         clientId: 'employee-app',
         clientSecret: 'myClientSecret',
