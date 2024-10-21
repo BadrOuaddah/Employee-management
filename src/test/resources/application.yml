@@ -1,3 +1,5 @@
+server:
+  port: 8082
 spring:
   datasource:
     url: jdbc:h2:mem:mydb
@@ -20,8 +22,6 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9091/realms/SpringBootKeycloak
-server:
-  port:8082
 jwt:
   auth:
     converter:
