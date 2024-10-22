@@ -13,21 +13,14 @@ pipeline {
             }
         }
 
-        stage('Clean') {
-            steps {
-                echo 'Cleaning the project...'
-                sh 'mvn clean install -U'
-            }
-        }
-
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                sh 'mvn clean compile'
+                sh 'mvn clean install -DskipTests'
             }
         }
 
-        stage('Tests') {
+        stage('Test') {
             steps {
                 echo 'Running tests...'
                 sh 'mvn test'
@@ -43,17 +36,11 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Archiving test results and logs...'
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-            junit 'target/surefire-reports/*.xml'
-        }
         success {
             echo 'Build, Tests, and Package succeeded!'
         }
         failure {
-            echo 'Build or Tests failed! Check logs for details.'
-            archiveArtifacts artifacts: 'target/logs/*.log', allowEmptyArchive: true
+            echo 'Build or Tests failed!'
         }
     }
 }
