@@ -33,11 +33,23 @@ pipeline {
                 bat 'mvn verify'
             }
         }
+
+        stage('JaCoCo Report') {
+            steps {
+                echo 'Generating JaCoCo code coverage report...'
+                jacoco execPattern: '**/target/jacoco.exec',
+                       classPattern: '**/target/classes',
+                       sourcePattern: '**/src/main/java',
+                       exclusionPattern: '**/src/test/java'
+            }
+        }
     }
 
     post {
         success {
             echo 'Build, Tests, and Package succeeded!'
+            junit '**/target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: '**/target/site/jacoco/*', allowEmptyArchive: true
         }
         failure {
             echo 'Build or Tests failed!'
