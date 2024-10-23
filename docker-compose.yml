@@ -13,7 +13,7 @@ services:
     ports:
       - "5438:5432"
     networks:
-      - keycloak-network
+      - my-network
 
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.1
@@ -42,7 +42,7 @@ services:
     command:
       - start-dev --import-realm
     networks:
-      - keycloak-network
+      - my-network
 
   jenkins:
     container_name: jenkins
@@ -54,11 +54,11 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - keycloak-network
+      - my-network
 
 volumes:
   keycloak-db-data:
   jenkins_home:
 
 networks:
-  keycloak-network:
+  my-network:
