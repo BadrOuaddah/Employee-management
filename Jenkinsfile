@@ -16,21 +16,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                bat 'mvn clean install -DskipTests'
+                sh 'mvn clean install -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
 
         stage('Integration Tests and Package') {
             steps {
                 echo 'Running integration tests and packaging the application...'
-                bat 'mvn verify'
+                sh 'mvn verify'
             }
         }
 
