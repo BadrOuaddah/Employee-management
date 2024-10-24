@@ -16,6 +16,7 @@ services:
       - my-network
 
   keycloak:
+    container_name: keycloak
     image: quay.io/keycloak/keycloak:22.0.1
     environment:
       KEYCLOAK_ADMIN: admin
@@ -62,3 +63,4 @@ volumes:
 
 networks:
   my-network:
+    driver: bridge
