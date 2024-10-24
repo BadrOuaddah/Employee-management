@@ -18,10 +18,10 @@ spring:
             scope: openid
         provider:
           keycloak:
-            issuer-uri: http://172.23.0.4:9091/realms/SpringBootKeycloak
+            issuer-uri: http://keycloak:9091/realms/SpringBootKeycloak
       resourceserver:
         jwt:
-          issuer-uri: http://172.23.0.4:9091/realms/SpringBootKeycloak
+          issuer-uri: http://keycloak:9091/realms/SpringBootKeycloak
 jwt:
   auth:
     converter:

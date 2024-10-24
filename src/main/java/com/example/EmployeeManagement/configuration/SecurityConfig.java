@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
-                                .jwkSetUri("http://172.23.0.4:9091/realms/SpringBootKeycloak/protocol/openid-connect/certs")))
+                                .jwkSetUri("http://keycloak:9091/realms/SpringBootKeycloak/protocol/openid-connect/certs")))
                 .logout(logout -> logout
                         .logoutSuccessUrl("/")
                         .permitAll());
