@@ -13,7 +13,8 @@ services:
     ports:
       - "5438:5432"
     networks:
-      - my-network
+      my-network:
+        ipv4_address: 172.20.0.2
 
   keycloak:
     container_name: keycloak
@@ -43,7 +44,8 @@ services:
     command:
       - start-dev --import-realm
     networks:
-      - my-network
+      my-network:
+        ipv4_address: 172.20.0.3
 
   jenkins:
     container_name: jenkins
@@ -55,14 +57,16 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - my-network
+      my-network:
+        ipv4_address: 172.20.0.4
 
   ubuntu:
     container_name: ubuntu
     image: ubuntu:latest
     command: sleep infinity
     networks:
-      - my-network
+      my-network:
+        ipv4_address: 172.20.0.5
 
 volumes:
   keycloak-db-data:
@@ -71,3 +75,6 @@ volumes:
 networks:
   my-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
