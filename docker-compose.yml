@@ -57,6 +57,13 @@ services:
     networks:
       - my-network
 
+  ubuntu:
+    container_name: ubuntu
+    image: ubuntu:latest
+    command: sleep infinity
+    networks:
+      - my-network
+
 volumes:
   keycloak-db-data:
   jenkins_home:
