@@ -9,9 +9,9 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "myClientSecret",
       "redirectUris": [
-        "http://keycloak:9091/*"
+        "http://localhost:9091/*"
       ],
-      "baseUrl": "http://keycloak:9091",
+      "baseUrl": "http://localhost:9091",
       "publicClient": false,
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": true,
