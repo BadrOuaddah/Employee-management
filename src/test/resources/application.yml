@@ -18,12 +18,7 @@ spring:
             scope: openid
         provider:
           keycloak:
-            issuer-uri: http://172.20.0.3:9091/realms/SpringBootKeycloak
+            issuer-uri: http://localhost:9091/realms/SpringBootKeycloak
       resourceserver:
         jwt:
-          issuer-uri: http://172.20.0.3:9091/realms/SpringBootKeycloak
-jwt:
-  auth:
-    converter:
-      resource-id: employee-app
-      principal-attribute: principal_username
+          issuer-uri: http://localhost:9091/realms/SpringBootKeycloak
