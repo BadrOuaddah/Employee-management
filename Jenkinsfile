@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-            maven 'Maven 3.9.9'
-        }
+        maven 'Maven 3.9.9'
+    }
 
     environment {
         KARATE_ENV = 'docker'
@@ -20,21 +20,29 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn clean install -DskipTests -DKARATE_ENV=docker'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh 'mvn test'
+                echo 'Running unit tests...'
+                sh 'mvn test -DKARATE_ENV=docker'
+            }
+        }
+
+        stage('Start Keycloak') {
+            steps {
+                echo 'Starting Keycloak container...'
+                sh 'docker run -d --name keycloak -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin jboss/keycloak'
+                sleep time: 20, unit: 'SECONDS' // Wait for Keycloak to fully start
             }
         }
 
         stage('Integration Tests and Package') {
             steps {
                 echo 'Running integration tests and packaging the application...'
-                sh 'mvn verify'
+                sh 'mvn verify -DKARATE_ENV=docker'
             }
         }
 
@@ -50,6 +58,10 @@ pipeline {
     }
 
     post {
+        always {
+            echo 'Stopping and removing Keycloak container...'
+            sh 'docker rm -f keycloak'
+        }
         success {
             echo 'Build, Tests, and Package succeeded!'
             junit '**/target/surefire-reports/*.xml'
