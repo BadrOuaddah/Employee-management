@@ -5,6 +5,10 @@ pipeline {
             maven 'Maven 3.9.9'
         }
 
+    environment {
+        KARATE_ENV = 'docker'
+    }
+
     stages {
         stage('Checkout') {
             steps {
