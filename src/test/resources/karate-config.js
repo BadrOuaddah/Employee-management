@@ -1,7 +1,8 @@
 function fun() {
+    var keycloakHost = karate.env == 'docker' ? 'keycloak:8080' : 'localhost:9091';
     var config = {
         baseUrl: 'http://localhost:8082',
-        tokenUrl: 'http://172.20.0.3:9091/realms/SpringBootKeycloak/protocol/openid-connect/token',
+        tokenUrl: `http://${keycloakHost}/realms/SpringBootKeycloak/protocol/openid-connect/token`,
         clientId: 'employee-app',
         clientSecret: 'myClientSecret',
         users: {
