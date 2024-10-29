@@ -24,18 +24,24 @@ pipeline {
             }
         }
 
+        stage('Start Keycloak') {
+            steps {
+                echo 'Starting Keycloak container...'
+                script {
+                    try {
+                        sh 'docker run -d --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.1 start-dev'
+                        sleep time: 30, unit: 'SECONDS'
+                    } catch (Exception e) {
+                        error 'Failed to start Keycloak container.'
+                    }
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
                 sh 'mvn test -DKARATE_ENV=docker'
-            }
-        }
-
-        stage('Start Keycloak') {
-            steps {
-                echo 'Starting Keycloak container...'
-                sh 'docker run -d --name keycloak -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=admin jboss/keycloak'
-                sleep time: 20, unit: 'SECONDS' // Wait for Keycloak to fully start
             }
         }
 
@@ -60,7 +66,9 @@ pipeline {
     post {
         always {
             echo 'Stopping and removing Keycloak container...'
-            sh 'docker rm -f keycloak'
+            script {
+                sh 'docker rm -f keycloak || true'
+            }
         }
         success {
             echo 'Build, Tests, and Package succeeded!'
